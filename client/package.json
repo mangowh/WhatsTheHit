@@ -1,0 +1,9 @@
+{
+  "name": "client",
+  "version": "0.1",
+  "description": "Pack Vue",
+  "main": "index.js",
+  "repository": "https://github.com/manghettodev/WhatsTheHit/tree/master/client",
+  "author": "Martino Tagliente",
+  "license": "MIT"
+}
