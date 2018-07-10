@@ -1,0 +1,12 @@
+{
+  "name": "server",
+  "version": "0.1",
+  "description": "Server node progetto WhatTheHit",
+  "main": "index.js",
+  "repository": "https://github.com/manghettodev/WhatsTheHit/tree/master/server",
+  "author": "Stefano Tambellini",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
