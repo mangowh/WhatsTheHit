@@ -1,14 +1,16 @@
-const express = require('express')
+const express = require("express");
 
-const app = express()
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send(
-    [{
-      title: "Hello World!",
-      description: "Hi there! How are you?"
-    }]
-  )
-})
+app.get("/", (req, res) => {
+  res.header("Content-Type", "application/json");
+  res.send(JSON.stringify(
+    {
+      "titolo" : "Hello World!",
+      "descrizione" : "Heilà"
+    }, null, 4));
+});
 
-app.listen(process.env.PORT || 8081)
+app.listen(8080);
+
+console.log("Server attivo. Disponibile a http://localhost:8080");
