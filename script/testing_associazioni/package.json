@@ -1,0 +1,14 @@
+{
+  "name": "testing_associazioni",
+  "version": "1.0.0",
+  "description": "Script per testare associazioni con l'API e eventualmente rimuovere ridondanze",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "musicbrainz": "^0.2.6",
+    "mysql": "^2.16.0",
+    "request": "^2.88.0",
+    "xml2js": "^0.4.19"
+  }
+}

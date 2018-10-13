@@ -1,0 +1,11 @@
+{
+  "name": "divisore_tabella",
+  "version": "1.0.0",
+  "description": "Script a uso singolo per trasferire vecchio sql nella nuova architettura",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "mysql": "^2.16.0"
+  }
+}
