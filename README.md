@@ -5,7 +5,7 @@
 
 ## Per lanciare client:
 
-* ```cd ./client```
+* ```cd ./app```
 * ```yarn``` o ```npm install```
 * ```yarn start``` o ```npm run start```
 
@@ -15,10 +15,9 @@ Disponibile a ```http://localhost:1234```
 
 * ```yarn build```
 
-Sarà disponibile nella cartella ```./client/dist```
+Sarà disponibile nella cartella ```./app/dist```
 
 ## Per lanciare server:
 
-* ```cd ./server```
 * ```yarn``` o ```npm install```
 * ```yarn start``` o ```npm run start```

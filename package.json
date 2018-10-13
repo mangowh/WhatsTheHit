@@ -1,17 +1,17 @@
 {
   "name": "server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Server node progetto WhatTheHit",
   "main": "index.js",
-  "repository": "https://github.com/manghettodev/WhatsTheHit/tree/master/server",
+  "repository": "https://github.com/manghettodev/WhatsTheHit",
   "author": "Stefano Tambellini",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.3"
   },
   "scripts": {
-    "start": "node app.js",
-    "test": "nodemon app.js"
+    "start": "node index.js",
+    "test": "nodemon index.js"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
