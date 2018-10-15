@@ -1,0 +1,9 @@
+CREATE PROCEDURE creacolonnacasuale()
+BEGIN
+  DECLARE n INT UNSIGNED
+
+  WHILE NOT EXISTS
+    ...
+    SET v1 = v1 - 1;
+  END WHILE;
+END

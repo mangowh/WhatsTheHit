@@ -13,7 +13,7 @@ Disponibile a ```http://localhost:1234```
 
 ### Per costruire una versione distribuibile:
 
-* ```yarn build```
+* ```yarn build``` o ```npm run build```
 
 Sarà disponibile nella cartella ```./app/dist```
 
