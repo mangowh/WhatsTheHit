@@ -2,9 +2,15 @@
 
 const path = require("path");
 const express = require("express");
+const morgan = require("morgan");
+
+const logger = require(path.join(__dirname, "/controller/logger.js"));
+
 const app = express();
 
-app.use(express.static(path.join(__dirname, "/app")))
+app.use(express.static(path.join(__dirname, "/app")));
+app.use(morgan("tiny"));
+app.use(logger.log);
 
 app.get("/", (req, res) => {
   res.header("Content-Type", "text/html");
