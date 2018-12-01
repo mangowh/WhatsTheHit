@@ -12,7 +12,8 @@
     "express": "^4.16.3",
     "http-errors": "^1.7.1",
     "morgan": "^1.9.1",
-    "pg": "^7.6.1"
+    "pg": "^7.6.1",
+    "pug": "^2.0.3"
   },
   "scripts": {
     "start": "node app.js",
