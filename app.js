@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 var path = require("path");
 var express = require("express");
 var cookieParser = require('cookie-parser');
@@ -39,6 +37,4 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
-app.listen(8080);
-
-console.log("Server attivo. Disponibile a http://localhost:8080");
+module.exports = app;

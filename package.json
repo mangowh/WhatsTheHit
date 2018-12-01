@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Server node progetto WhatTheHit",
   "main": "app.js",
   "repository": "https://github.com/manghettodev/WhatsTheHit",
@@ -16,8 +16,8 @@
     "pug": "^2.0.3"
   },
   "scripts": {
-    "start": "node app.js",
-    "test": "nodemon app.js"
+    "start": "node ./bin/www",
+    "debug": "DEBUG=whatsthehit:* nodemon ./bin/www"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
