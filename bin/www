@@ -15,7 +15,7 @@ var http = require('http');
  * Settaggio porta del server
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.HTTP_DEV_PORT || '8080');
 app.set('port', port);
 
 /**
@@ -65,11 +65,11 @@ function onError(error) {
 
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      console.error(bind + ' richiede privilegi elevati');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      console.error(bind + ' è occupata');
       process.exit(1);
       break;
     default:
@@ -86,5 +86,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug("Server in ascolto all'indirizzo: http://localhost:" + port);
 }
