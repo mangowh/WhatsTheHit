@@ -1,26 +1,28 @@
-require("dotenv").config();
-
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+var squel = require("squel");
+var debug = require("debug")("whatsthehit:query")
 
-var { Client } = require("pg");
+var pool = require("../db/index.js");
 
-var client = new Client({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
-  port: process.env.DB_PORT
+router.use((req, res, next) => {
+  res.header("Content-Type", "application/json");
+  next();
 });
 
-//Non usare funzione sincrona
-client.connect(); //XXX
-//#############
-
-router.get("/",(req, res, next) => {
-  res.header("Content-Type", "application/json");
-  client.query("SELECT * FROM artista limit 10")
-    .then(query => res.send(JSON.stringify(query.rows)));
+router.get("/", (req, res, next) => {
+  pool.connect((err, client, release) => {
+    if (err) {
+      debug(err.stack)
+    }
+    client.query(squel.select().from("artista").toString(), (err, result) => {
+      release()
+      if (err) {
+        debug(err.stack)
+      }
+      res.send(JSON.stringify(result.rows));
+    })
+  })
 });
 
 module.exports = router;

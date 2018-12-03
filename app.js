@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var path = require("path");
 var express = require("express");
 var cookieParser = require('cookie-parser');
@@ -20,6 +22,8 @@ app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 
 //routing pagine
 app.use("/", require("./routes/index.js"));
+
+//rest api
 app.use("/query", require("./routes/query.js"));
 
 //routing errore 404
