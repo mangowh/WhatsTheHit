@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var squel = require("squel");
 var debug = require("debug")("whatsthehit:query")
+var util = require("util")
 
 var pool = require("../db/index.js");
 
@@ -10,18 +11,82 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get("/", (req, res, next) => {
+function genSQL(body) {
+  switch (body["tabella"]) {
+    case ("artista"): {
+      return squel.insert()
+        .into("artista")
+        .set("id", body["id"])
+        .set("nome", body["nome"])
+        .toString();
+
+      break;
+    }
+  }
+}
+
+router.get("/select", (req, res, next) => {
+  pool.connect((err, client, release) => {
+    if (err) {
+      debug(err.stack);
+    }
+
+    var query = squel.select()
+      .from("artista")
+      .toString();
+
+    client.query(query, (err, result) => {
+      release();
+      if (err) {
+        debug(err.stack);
+      } else {
+        res.send(JSON.stringify(result.rows));
+      }
+    })
+  })
+});
+
+router.post("/insert", (req, res, next) => {
   pool.connect((err, client, release) => {
     if (err) {
       debug(err.stack)
     }
-    client.query(squel.select().from("artista").toString(), (err, result) => {
-      release()
+
+    var query = genSQL(req.body)
+
+    client.query(query, (err, result) => {
+      release();
       if (err) {
-        debug(err.stack)
+        debug(err.stack);
+        res.render("error");
+      } else {
+        res.send("OK");
       }
-      res.send(JSON.stringify(result.rows));
-    })
+    });
+  })
+});
+
+router.post("/delete", (req, res, next) => {
+  pool.connect((err, client, release) => {
+    if (err) {
+      debug(err.stack)
+    }
+
+    var query = squel.delete()
+      .from(req.body["tabella"])
+      .where("id = ?", req.body["id"])
+      .where("nome = ?", req.body["nome"])
+      .toString();
+
+    client.query(query, (err, result) => {
+      release();
+      if (err) {
+        debug(err.stack);
+        res.render("error");
+      } else {
+        res.send("OK");
+      }
+    });
   })
 });
 
