@@ -15,7 +15,7 @@ var http = require('http');
  * Settaggio porta del server
  */
 
-var port = normalizePort(process.env.HTTP_DEV_PORT || '8080');
+var port = normalizePort(process.env.PORT || process.env.HTTP_DEV_PORT || '8080');
 app.set('port', port);
 
 /**
