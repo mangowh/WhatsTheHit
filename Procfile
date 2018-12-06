@@ -1,1 +1,1 @@
-web: DEBUG=whatsthehit:* nodemon ./bin/www
+web: DEBUG=whatsthehit:* node ./bin/www
