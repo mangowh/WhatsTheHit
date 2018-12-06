@@ -1,1 +1,1 @@
-web: DEBUG=whatsthehit:* node ./bin/www
+node ./bin/www
