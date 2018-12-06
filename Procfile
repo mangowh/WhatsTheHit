@@ -1,0 +1,1 @@
+web: DEBUG=whatsthehit:* nodemon ./bin/www

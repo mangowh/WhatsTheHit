@@ -4,6 +4,7 @@ var path = require("path");
 var express = require("express");
 var cookieParser = require('cookie-parser');
 var createError = require('http-errors');
+var cors = require('cors')
 var logger = require("morgan");
 
 var app = express();
@@ -17,6 +18,7 @@ app.use(logger("dev"));
 app.use(express.json()); //middleware per gestione json
 app.use(express.urlencoded({ extended: false })); //non è possibile inserire oggetti dentro altri oggetti
 app.use(cookieParser()); //middleware per gestione cookie
+app.use(cors()); 
 
 app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 

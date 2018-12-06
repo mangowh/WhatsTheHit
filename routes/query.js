@@ -84,7 +84,7 @@ router.post("/delete", (req, res, next) => {
         debug(err.stack);
         res.render("error");
       } else {
-        res.send("OK");
+        res.send(result);
       }
     });
   })
