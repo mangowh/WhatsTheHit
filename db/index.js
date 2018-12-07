@@ -3,7 +3,8 @@ var options;
 if (process.env.ONLINE === "ON") {
   options = {
     client: 'pg',
-    connection: "postgres://ktgkvfde:sWIz7ip0tNOcU1dMSXCwGbrmED7CzAv6@manny.db.elephantsql.com:5432/ktgkvfde"
+    connection: "postgres://ktgkvfde:sWIz7ip0tNOcU1dMSXCwGbrmED7CzAv6@manny.db.elephantsql.com:5432/ktgkvfde",
+    ssl: true
   }
 } else {
   options = {
