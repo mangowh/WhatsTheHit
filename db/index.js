@@ -16,5 +16,4 @@ if (process.env.ONLINE === "ON") {
   });
 }
 
-
 module.exports = pool;

@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 var debug = require("debug")("whatsthehit:query")
 
-var squel = require("squel");
 var pool = require("../db/index.js");
 
 router.use((req, res, next) => {

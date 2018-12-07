@@ -1,24 +1,24 @@
 require("dotenv").config();
 
-var path = require("path");
-var express = require("express");
-var cookieParser = require('cookie-parser');
-var createError = require('http-errors');
-var cors = require('cors')
-var logger = require("morgan");
+const path = require("path");
+const express = require("express");
+const createError = require('http-errors');
+const cors = require('cors')
+const helmet = require('helmet')
+const logger = require("morgan");
 
-var app = express();
+const app = express();
 
 //impostazioni viste
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 //routing generico
+app.use(helmet());
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json()); //middleware per gestione json
 app.use(express.urlencoded({ extended: false })); //non è possibile inserire oggetti dentro altri oggetti
-app.use(cookieParser()); //middleware per gestione cookie
-app.use(cors()); 
 
 app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 

@@ -10,11 +10,12 @@
     "node": "11.x"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "dotenv": "^6.1.0",
     "express": "^4.16.3",
+    "helmet": "^3.15.0",
     "http-errors": "^1.7.1",
+    "knex": "^0.15.2",
     "morgan": "^1.9.1",
     "pg": "^7.7.1",
     "pug": "^2.0.3",
@@ -25,6 +26,8 @@
     "debug": "DEBUG=whatsthehit:* nodemon ./bin/www"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "nsp": "^3.2.1",
+    "snyk": "^1.116.2"
   }
 }

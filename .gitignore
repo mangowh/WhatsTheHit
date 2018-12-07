@@ -1,6 +1,7 @@
 *.vs
 *.env
 *.vscode
+*.snyk
 
 # Logs
 logs
