@@ -2,8 +2,6 @@ var express = require("express");
 var router = express.Router();
 var debug = require("debug")("whatsthehit:query")
 
-var pool = require("../db/index.js");
-
 router.use((req, res, next) => {
   res.header("Content-Type", "application/json");
   next();
