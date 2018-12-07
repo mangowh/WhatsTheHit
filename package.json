@@ -1,7 +1,7 @@
 {
   "name": "server",
-  "version": "0.0.3",
-  "description": "Server node progetto WhatTheHit",
+  "version": "0.0.4",
+  "description": "Server node progetto WhatsTheHit",
   "main": "app.js",
   "repository": "https://github.com/manghettodev/WhatsTheHit",
   "author": "Stefano Tambellini",

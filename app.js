@@ -30,10 +30,13 @@ app.use("/query", require("./routes/query.js"));
 
 //routing errore 404
 app.use((req, res, next) => {
+  res.header("Content-Type", "text/html");
   next(createError(404));
 });
 
 app.use(function(err, req, res, next) {
+  res.header("Content-Type", "text/html");
+
   // setta variabili da passare al renderer
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {}; //solo se in sviluppo mostra errore
