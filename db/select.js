@@ -3,12 +3,9 @@ const knex = require("./index.js");
 
 module.exports = (req, res, next) => {
 
-  var dati = req.body;
-  delete dati.tabella;
-  debug(dati);
-
-  knex.from(req.body["tabella"]).select("*")
-    .where(dati)
+  knex.from(req.body["from"])
+    .where(req.body.where)
+    .select("*")
     .then((rows) => res.send(rows))
     .catch((err) => debug(err.stack));
 };
