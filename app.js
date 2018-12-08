@@ -7,13 +7,15 @@ const cors = require('cors')
 const helmet = require('helmet')
 const logger = require("morgan");
 
+const auth = require("./config/auth")
+
 const app = express();
 
 //impostazioni viste
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-if(process.env.NODE_ENV == "development") {
+if(process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
 }
 
@@ -29,7 +31,7 @@ app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 app.use("/", require("./routes/index.js"));
 
 //rest api
-app.use("/api", require("./routes/api.js"));
+app.use("/api", auth, require("./routes/api.js"));
 
 //routing errore 404
 app.use((req, res, next) => {

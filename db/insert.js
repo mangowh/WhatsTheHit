@@ -1,4 +1,4 @@
-var debug = require("debug")("whatsthehit:api/select")
+var debug = require("debug")("whatsthehit:api/insert")
 var knex = require("./index.js");
 
 module.exports = (req, res, next) => {
