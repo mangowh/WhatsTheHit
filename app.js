@@ -13,10 +13,13 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+if(process.env.NODE_ENV == "development") {
+  app.use(logger("dev"));
+}
+
 //routing generico
 app.use(helmet());
 app.use(cors());
-app.use(logger("dev"));
 app.use(express.json()); //middleware per gestione json
 app.use(express.urlencoded({ extended: false })); //non è possibile inserire oggetti dentro altri oggetti
 
@@ -26,7 +29,7 @@ app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 app.use("/", require("./routes/index.js"));
 
 //rest api
-app.use("/query", require("./routes/query.js"));
+app.use("/api", require("./routes/api.js"));
 
 //routing errore 404
 app.use((req, res, next) => {

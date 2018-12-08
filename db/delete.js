@@ -1,15 +1,15 @@
-var debug = require("debug")("whatsthehit:query/select")
+var debug = require("debug")("whatsthehit:api/select")
 var knex = require("./index.js");
 
 module.exports = (req, res, next) => {
 
-  /*var dati = req.body;
+  var dati = req.body;
   delete dati.tabella;
-  debug(dati);*/
+  debug(dati);
 
   knex.from(req.body["tabella"])
-    .where({ id: req.body["id"], nome: req.body["nome"] })
+    .where(dati)
     .del()
-    .then(() => res.send("OK"))
-    .catch((err) => debug(err.stack));
+    .then(res.send("OK"))
+    .catch((err) => debug(err.stack))
 }

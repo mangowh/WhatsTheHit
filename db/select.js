@@ -1,4 +1,4 @@
-const debug = require("debug")("whatsthehit:query/select")
+const debug = require("debug")("whatsthehit:api/select")
 const knex = require("./index.js");
 
 module.exports = (req, res, next) => {

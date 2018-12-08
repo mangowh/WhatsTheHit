@@ -21,7 +21,7 @@
     "pug": "^2.0.3"
   },
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "NODE_ENV=production node ./bin/www",
     "debug": "DEBUG=whatsthehit:* nodemon ./bin/www"
   },
   "devDependencies": {
