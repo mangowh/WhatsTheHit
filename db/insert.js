@@ -2,8 +2,10 @@ var debug = require("debug")("whatsthehit:api/insert")
 var knex = require("./index.js");
 
 module.exports = (req, res, next) => {
-  knex.from(req.body.from)
-    .insert(req.body.rows)
+  debug(req.body)
+  var ajax = JSON.parse(req.body);
+  knex.from(ajax.from)
+    .insert(ajax.rows)
     .then(() => res.render("ok"))
     .catch((err) => debug(err.stack))
 }
