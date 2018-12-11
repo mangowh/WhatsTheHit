@@ -1,7 +1,6 @@
 const fs = require("fs");
 const rp = require("request-promise");
 const cheerio = require('cheerio');
-var csv = require("csv");
 
 var $,
   link = "http://www.hitparadeitalia.it/hp_yends/hpe",
@@ -9,7 +8,9 @@ var $,
 
 //for (anno; anno <= 2016; anno++) {
 rp(link.concat(anno.toString(), ".htm"), { encoding: "latin1" })
-  .then((html) => parsaHTML(html))
+  .then((html) => {
+    scriviFile(parsaHTML(html))
+  })
   .catch((err) => console.log(err))
 //}
 
@@ -31,12 +32,23 @@ function parsaHTML(html) {
     .replace(/\s\((.*?)\)\s/gu, "")
     .replace(/\[(.*?)\]/gu, "")
     .replace(/\s\n/gu, "\n")
-    .replace(/(\S)\-/gu, "$1 \-")
+    .replace(/\s\s/gu, "\n")
+    .replace(/(\S)- /gu, "$1 - ")
+    .replace(/\n (\S)/gu, "\n$1")
     .trim()
-  
-  fs.writeFileSync("output.txt", formattato);
 
-  //var csvParsato = csv.parse(formattato,{ delimiter : "-"})
+  return formattato
+}
 
-  fs.writeFileSync("output.csv", csvParsato);
+function scriviFile(testo) {
+  fs.writeFileSync("output.txt", testo);
+
+  var output = '"titolo","artista"\n' + testo;
+
+  output = output
+    .replace(/(.*?) - /gu, '"$1" - ')
+    .replace(/ - (.*)/gu, ' - "$1"')
+    .replace(/ - /gu, ",")
+
+  fs.writeFileSync("output.csv", output);
 }
