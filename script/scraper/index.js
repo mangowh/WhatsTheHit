@@ -1,21 +1,25 @@
+"use strict";
+
 const fs = require("fs");
-const rp = require("request-promise");
+const request = require("sync-request");
 const cheerio = require('cheerio');
 
-var $,
-  link = "http://www.hitparadeitalia.it/hp_yends/hpe",
-  anno = 1947
+var link = "http://www.hitparadeitalia.it/hp_yends/hpe";
 
-//for (anno; anno <= 2016; anno++) {
-rp(link.concat(anno.toString(), ".htm"), { encoding: "latin1" })
-  .then((html) => {
-    scriviFile(parsaHTML(html))
-  })
-  .catch((err) => console.log(err))
-//}
+if (fs.existsSync("output.csv")) {
+  fs.unlinkSync("output.csv")
+}
 
-function parsaHTML(html) {
-  $ = cheerio.load(html, {
+fs.writeFileSync("output.csv", '"posizione","titolo","artista","anno"\r\n')
+
+var annoIniziale = 1947;
+var annoFinale = 2016;
+
+var anno = 1997
+for (var anno = annoIniziale; anno <= annoFinale; anno++) {
+  var html = request("GET", link.concat(anno.toString(), ".htm")).getBody('latin1');
+
+  var $ = cheerio.load(html, {
     normalizeWhitespace: true,
     decodeEntities: true
   });
@@ -24,7 +28,7 @@ function parsaHTML(html) {
     return $(elem).text();
   }).get().join(" ");
 
-  var formattato = scrape.toString()
+  var testo = scrape.toString()
     .replace(/\n\n/gu, "")
     .replace(/    /gu, "")
     .replace(/   /gu, "")
@@ -35,20 +39,35 @@ function parsaHTML(html) {
     .replace(/\s\s/gu, "\n")
     .replace(/(\S)- /gu, "$1 - ")
     .replace(/\n (\S)/gu, "\n$1")
+    .replace(/\n\n/gu, "\n")
+    .replace(/\n-/gu, " -")
+    .replace(/"/gu, "'")
+    .replace(/\n\n/gu, "\n")
     .trim()
 
-  return formattato
-}
+  var diviso = testo.split("\n");
 
-function scriviFile(testo) {
-  fs.writeFileSync("output.txt", testo);
+  if (anno == 1997) {
+    diviso.splice(0, 1)
+  }
 
-  var output = '"titolo","artista"\n' + testo;
+  for (let i = 0; i < diviso.length; i++) {
+    diviso[i] = (i + 1).toString() + " : " + diviso[i] + " ; " + anno.toString()
+  }
+
+  var output = diviso.join("\r\n");
 
   output = output
-    .replace(/(.*?) - /gu, '"$1" - ')
-    .replace(/ - (.*)/gu, ' - "$1"')
+    .replace(/(\d*) : (.*?) - /gu, '"$1","$2" - ')
+    .replace(/ - (.*) ; (\d*)/gu, ' - "$1","$2"')
     .replace(/ - /gu, ",")
 
-  fs.writeFileSync("output.csv", output);
+  if (anno == annoIniziale)
+    fs.appendFileSync("output.csv", output)
+  else
+    fs.appendFileSync("output.csv", "\r\n" + output)
+
+  console.log("Anno " + anno + "...")
 }
+
+console.log("Completato!")
