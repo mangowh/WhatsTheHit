@@ -1,6 +1,6 @@
+var debug = require("debug")("whatsthehit:api")
 var express = require("express");
 var router = express.Router();
-var debug = require("debug")("whatsthehit:api")
 const auth = require("../config/auth")
 
 router.use((req, res, next) => {

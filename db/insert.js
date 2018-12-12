@@ -7,5 +7,8 @@ module.exports = (req, res, next) => {
   knex.from(ajax.from)
     .insert(ajax.rows)
     .then(() => res.render("ok"))
-    .catch((err) => debug(err.stack))
+    .catch((err) => {
+      debug(err)
+      next(createError(err.status))
+    });
 }

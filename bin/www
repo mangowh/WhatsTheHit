@@ -82,5 +82,5 @@ function onError(error) {
  */
 
 function onListening() {
-  debug("Server in ascolto all'indirizzo: http://"+ server.address().address + ":" + port);
+  debug("Server in ascolto sulla porta " + port);
 }

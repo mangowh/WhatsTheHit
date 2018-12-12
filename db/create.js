@@ -1,4 +1,5 @@
 const debug = require("debug")("whatsthehit:api/create")
+const createError = require('http-errors');
 const knex = require("./index.js");
 
 module.exports = (req, res, next) => {
@@ -18,6 +19,7 @@ module.exports = (req, res, next) => {
       res.render("OK");
     })
     .catch((err) => {
-      debug(err);
+      debug(err)
+      next(createError(err.status))
     });
 };

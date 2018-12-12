@@ -1,4 +1,5 @@
 const debug = require("debug")("whatsthehit:api/create")
+const createError = require('http-errors');
 const knex = require("./index.js");
 
 module.exports = (req, res, next) => {
@@ -9,8 +10,7 @@ module.exports = (req, res, next) => {
       res.render("OK");
     })
     .catch((err) => {
-      res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {}; //solo se in sviluppo mostra errore
-      res.render("error");
+      debug(err)
+      next(createError(err.status))
     });
 };
