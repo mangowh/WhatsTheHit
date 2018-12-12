@@ -2,7 +2,7 @@ const debug = require("debug")("whatsthehit:api/select")
 const knex = require("./index.js");
 
 module.exports = (req, res, next) => {
-  debug(JSON.parse(req.body))
+  debug(req.body)
 
   knex.from(req.body.from)
     .where(req.body.where)

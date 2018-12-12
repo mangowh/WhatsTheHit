@@ -7,8 +7,6 @@ const cors = require('cors')
 const helmet = require('helmet')
 const logger = require("morgan");
 
-const auth = require("./config/auth")
-
 const app = express();
 
 //impostazioni viste
@@ -31,7 +29,7 @@ app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 app.use("/", require("./routes/index.js"));
 
 //rest api
-app.use("/api", auth, require("./routes/api.js"));
+app.use("/api", require("./routes/api.js"));
 
 //routing errore 404
 app.use((req, res, next) => {
