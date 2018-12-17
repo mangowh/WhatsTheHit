@@ -1,6 +1,6 @@
-var debug = require("debug")("whatsthehit:api")
-var express = require("express");
-var router = express.Router();
+const debug = require("debug")("whatsthehit:api")
+const express = require("express");
+const router = express.Router();
 const auth = require("../config/auth")
 
 router.use((req, res, next) => {
@@ -10,17 +10,14 @@ router.use((req, res, next) => {
 
 router.use(auth)
 
-router.post("/select", require("../db/select.js"));
+router.post("/select", require("../db/select"));
 
-router.post("/create",require("../db/create.js"))
+router.post("/create", require("../db/create"))
 
-router.post("/drop", require("../db/drop.js"));
+router.post("/drop", require("../db/drop"));
 
-router.post("/insert", require("../db/insert.js"));
+router.post("/insert", require("../db/insert"));
 
-router.post("/delete", require("../db/delete.js"));
-
-//(router.post("/insertcsv", require("..db/insertcsv.js"))
-
+router.post("/delete", require("../db/delete"));
 
 module.exports = router;

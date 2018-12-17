@@ -1,4 +1,5 @@
 var debug = require("debug")("whatsthehit:api/delete")
+const createError = require('http-errors');
 var knex = require("./index.js");
 
 module.exports = (req, res, next) => {
@@ -6,5 +7,8 @@ module.exports = (req, res, next) => {
     .where(req.body.where)
     .del()
     .then(() => res.render("ok"))
-    .catch((err) => debug(err.stack))
+    .catch((err) => {
+      debug(err)
+      next(createError(err.status))
+    });
 }
