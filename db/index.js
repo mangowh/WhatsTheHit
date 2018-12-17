@@ -4,7 +4,7 @@ var options = {
 }
 
 if (process.env.ONLINE === "ON") {
-  options.connection = "postgres://ktgkvfde:sWIz7ip0tNOcU1dMSXCwGbrmED7CzAv6@manny.db.elephantsql.com:5432/ktgkvfde";
+  options.connection = process.env.ELE_URL;
   options.ssl = true
 } else {
   options.connection = {
