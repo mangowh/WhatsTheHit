@@ -1,11 +1,11 @@
 require("dotenv").config();
 
-const path = require("path");
-const express = require("express");
-const createError = require('http-errors');
-const cors = require('cors')
-const helmet = require('helmet')
-const logger = require("morgan");
+const path = require("path"),
+  express = require("express"),
+  createError = require('http-errors'),
+  cors = require('cors'),
+  helmet = require('helmet'),
+  logger = require("morgan")
 
 const app = express();
 
@@ -13,7 +13,7 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-if(process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
 }
 
@@ -26,10 +26,10 @@ app.use(express.urlencoded({ extended: false })); //non è possibile inserire pa
 app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 
 //routing pagine
-app.use("/", require("./routes/index.js"));
+app.use("/", require("./src/routes/index.js"));
 
 //rest api
-app.use("/api", require("./routes/api.js"));
+app.use("/api", require("./src/routes/api.js"));
 
 //routing errore 404
 app.use((req, res, next) => {
@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
 
   res.header("Content-Type", "text/html");
 
-  if(process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV !== "development") {
     delete err.stack
   }
 

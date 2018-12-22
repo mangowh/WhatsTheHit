@@ -1,6 +1,6 @@
-var debug = require("debug")("whatsthehit:api/insert")
-const createError = require('http-errors');
-var knex = require("./index.js");
+const debug = require("debug")("whatsthehit:api/insert"),
+  createError = require('http-errors'),
+  knex = require("../config/knex.js")
 
 module.exports = (req, res, next) => {
   debug(req.body)
