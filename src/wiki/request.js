@@ -3,29 +3,47 @@ const debug = require("debug")("whatsthehit:api"),
   rp = require('request-promise')
 
 module.exports = (req, res, next) => {
-  debug("!ok")
-
-  /*var url = wdk.searchEntities({
-    search: 'Rihanna',
-    limit: 5,
+  var url = wdk.searchEntities({
+    search: 'tiziano ferro',
+    limit: 3,
     language: "it",
     format: 'json'
   })
-  
+
   rp(url)
     .then((response) => {
       var id = JSON.parse(response).search[0].id
+      var options = {
+        "ids": id,
+        "languages": ['en', 'it'],
+      }
+      return options
+    })
+    .then(opt => {
+      return wdk.getEntities(opt)
+    })
+    .then(rp)
+    .then(response => {
+      var entities = wdk.simplify.entities(JSON.parse(response).entities)
+      var entity = Object.keys(entities)[0].toString()
+      var id = entities[entity].claims.P1412.toString().split(",")
       debug(id)
-      return wdk.getEntities(id)
+      var options = {
+        "ids": id,
+        "languages": ['en', 'it'],
+      }
+      return options
+      
     })
-    .then((url) => {
-      rp(url)
-        .then((response) => {
-          var entity = JSON.parse(response).entities
-          res.send(entity)
-        })
+    .then(opt => {
+      return wdk.getEntities(opt)
     })
-    .catch((err) => {
-      res.send(err)
-    })*/
+    .then(rp)
+    .then((response) => {
+      var entities = wdk.simplify.entities(JSON.parse(response).entities)
+      var entity = Object.keys(entities)[0].toString()
+      var lang = entities[entity].labels
+
+      res.send(lang)
+    })
 }
