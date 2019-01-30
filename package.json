@@ -28,7 +28,10 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
-    "debug": "nodemon ./bin/www"
+    "test": "nodemon ./bin/www",
+    "debug-start": "pm2 start ./bin/www",
+    "debug-stop": "pm2 stop ./bin/www",
+    "logs": "DEBUG='*' pm2 logs --update-env"
   },
   "devDependencies": {
     "nodemon": "^1.18.4",
