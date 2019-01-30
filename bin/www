@@ -3,38 +3,38 @@
 //Gestione variabili di sistema
 require("dotenv").config();
 
-/**
- * Dipendenze
- */
+//Dipendenze
 
-var app = require('../app');
-var debug = require('debug')('whatsthehit:server');
-var http = require('http');
+const app = require('../app'),
+  debug = require('debug')('whatsthehit:server'),
+  http = require('http'),
+  https = require("https"),
+  fs = require('fs')
 
-/**
- * Settaggio porta del server
- */
+//Settaggio porta del server
 
 var port = normalizePort(process.env.PORT || '8080');
-app.set('port', port);
+var ssl_port = normalizePort(process.env.SSL_PORT || '8443');
 
-/**
- * Creazione server http
- */
+//Creazione server
 
-var server = http.createServer(app);
+var options = {
+  key: fs.readFileSync('cert/private.key', "utf8"),
+  cert: fs.readFileSync('cert/mydomain.cert', "utf8")
+}
 
-/**
- * Impostazione server
- */
+var ssl_server = https.createServer(options, app).listen(ssl_port);
+var server = http.createServer(app).listen(port);
 
-server.listen(port);
+//Impostazione server
+
 server.on('error', onError);
-server.on('listening', onListening);
+ssl_server.on('error', onError);
 
-/**
- * Funzione di normalizzazione del valore della porta
- */
+server.on('listening', onListening);
+ssl_server.on('listening', onListening);
+
+//Funzione di normalizzazione del valore della porta
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -50,9 +50,7 @@ function normalizePort(val) {
   return false;
 }
 
-/**
- * Ascoltatori per il caso di errore
- */
+//Ascoltatori per il caso di errore
 
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -77,10 +75,12 @@ function onError(error) {
   }
 }
 
-/**
- * Ascoltatori per il caso di ascolto
- */
+//Ascoltatori per il caso di ascolto
 
 function onListening() {
-  debug("Server in ascolto sulla porta " + port);
+  if(this.key) {
+    debug("Server HTTPS in ascolto all'indirizzo https://localhost:"+ssl_port);
+  } else {
+    debug("Server HTTP in ascolto all'indirizzo https://localhost:"+port);
+  }
 }
