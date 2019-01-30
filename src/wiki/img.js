@@ -2,13 +2,11 @@ const debug = require("debug")("whatsthehit:api"),
   wdk = require("wikidata-sdk"),
   rp = require('request-promise'),
   { getCode, getName } = require('country-list'),
-  CountryLanguage = require('country-language');
-
+  CountryLanguage = require('country-language'),
+  md5 = require("md5");
 
 module.exports = (req, res, next) => {
   var nome = unescape(req.query.name)
-
-  var lang = "it"
 
   var url = wdk.searchEntities({
     search: nome,
@@ -16,7 +14,6 @@ module.exports = (req, res, next) => {
     language: "it",
     format: 'json'
   })
-
   rp(url)
     .then((response) => {
       var id
@@ -26,9 +23,9 @@ module.exports = (req, res, next) => {
       } else {
         throw new Error('error');
       }
+
       var options = {
-        "ids": id,
-        "languages": lang,
+        "ids": id
       }
       return options
     })
@@ -37,32 +34,23 @@ module.exports = (req, res, next) => {
     })
     .then(rp)
     .then(response => {
+
       var entities = wdk.simplify.entities(JSON.parse(response).entities)
       var entity = Object.keys(entities)[0].toString()
 
-      var id = entities[entity].claims.P18.toString().split(",");
+      var nome = entities[entity].claims.P18.toString().split(",")[0];
 
-      if (id === "undefined") {
+      if (nome === "undefined") {
         throw new Error();
       }
 
-      var options = {
-        "ids": id,
-        "languages": lang,
-      }
-      return options
-    })
-    .then(opt => {
-      return wdk.getEntities(opt)
-    })
-    .then(rp)
-    .then((response) => {
+      nome = nome.replace(/\s/g, "_");
 
-      var entities = wdk.simplify.entities(JSON.parse(response).entities)
-      var entity = Object.keys(entities)[0].toString()
+      var hash = md5(nome);
 
-      var result = entities[entity]
-      res.send(result)
+      var link = "https://upload.wikimedia.org/wikipedia/commons/" + hash[0] + "/" + hash[0] + hash[1] + "/" + nome;
+
+      res.send(link)
     })
     .catch(error => {
       res.render("error")
