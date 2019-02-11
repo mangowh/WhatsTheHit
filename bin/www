@@ -64,7 +64,7 @@ function onError(error) {
 
 //Ascoltatori per il caso di ascolto
 function onListening() {
-  console.log("Server HTTP in ascolto all'indirizzo https://localhost:" + port);
+  console.log("Server HTTP in ascolto all'indirizzo http://localhost:" + port);
 }
 
 //HTTPS
