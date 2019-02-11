@@ -4,7 +4,6 @@
 require("dotenv").config();
 
 //Dipendenze
-
 const app = require('../app'),
   debug = require('debug')('whatsthehit:server'),
   http = require('http'),
@@ -12,30 +11,19 @@ const app = require('../app'),
   fs = require('fs')
 
 //Settaggio porta del server
-
 var port = normalizePort(process.env.PORT || '8080');
-var ssl_port = normalizePort(process.env.SSL_PORT || '8443');
 
 //Creazione server
-
-/*var options = {
-  key: fs.readFileSync('cert/private.key', "utf8"),
-  cert: fs.readFileSync('cert/mydomain.cert', "utf8")
-}*/
-
-//var ssl_server = https.createServer(options, app).listen(ssl_port);
-var server = http.createServer(app).listen(port);
+var server = http.createServer(app);
 
 //Impostazione server
-
 server.on('error', onError);
-//ssl_server.on('error', onError);
-
 server.on('listening', onListening);
-//ssl_server.on('listening', onListening);
+
+//Avvio server
+server.listen(port);
 
 //Funzione di normalizzazione del valore della porta
-
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
@@ -51,7 +39,6 @@ function normalizePort(val) {
 }
 
 //Ascoltatori per il caso di errore
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -76,11 +63,25 @@ function onError(error) {
 }
 
 //Ascoltatori per il caso di ascolto
-
 function onListening() {
-  if(this.key) {
-    debug("Server HTTPS in ascolto all'indirizzo https://localhost:"+ssl_port);
-  } else {
-    debug("Server HTTP in ascolto all'indirizzo https://localhost:"+port);
-  }
+  console.log("Server HTTP in ascolto all'indirizzo https://localhost:" + port);
 }
+
+//HTTPS
+//var ssl_port = normalizePort(process.env.SSL_PORT || '8443');
+
+/*var options = {
+  key: fs.readFileSync('cert/private.key', "utf8"),
+  cert: fs.readFileSync('cert/mydomain.cert', "utf8")
+}*/
+
+//var ssl_server = https.createServer(options, app).listen(ssl_port);
+
+//ssl_server.on('error', onError);
+
+//ssl_server.on('listening', onListening);
+/*
+if (this.key) {
+  debug("Server HTTPS in ascolto all'indirizzo https://localhost:" + ssl_port);
+}
+*/
