@@ -7,29 +7,31 @@ module.exports = (req, res, next) => {
   var query = knex.queryBuilder();
 
   //FROM
-  if (Array.isArray(req.body.from)) {
-    if (req.body.from.length == 2) {
-      if (isEqual(req.body.from, ["artista", "canzone"]) || isEqual(req.body.from, ["canzone", "artista"])) {
-        query.from("artista")
-          .join("associazione_artista_canzone", "artista.id", "associazione_artista_canzone.artista_id")
-          .join("canzone", "canzone.id", "associazione_artista_canzone.canzone_id");
+  if (req.body.from) {
+    if (Array.isArray(req.body.from)) {
+      if (req.body.from.length == 2) {
+        if (isEqual(req.body.from, ["artista", "canzone"]) || isEqual(req.body.from, ["canzone", "artista"])) {
+          query.from("artista")
+            .join("associazione_artista_canzone", "artista.id", "associazione_artista_canzone.artista_id")
+            .join("canzone", "canzone.id", "associazione_artista_canzone.canzone_id");
 
-      } else if (isEqual(req.body.from, ["artista", "album"]) || isEqual(req.body.from, ["album", "artista"])) {
-        query.from("artista")
-          .join("associazione_artista_album", "artista.id", "associazione_artista_album.artista_id")
-          .join("album", "album.id", "associazione_artista_album.album_id");
+        } else if (isEqual(req.body.from, ["artista", "album"]) || isEqual(req.body.from, ["album", "artista"])) {
+          query.from("artista")
+            .join("associazione_artista_album", "artista.id", "associazione_artista_album.artista_id")
+            .join("album", "album.id", "associazione_artista_album.album_id");
+        }
+      } else if (req.body.from.length == 3) {
+        if (isEqual(req.body.from.slice().sort(), ["album", "artista", "canzone"])) {
+          query.from("artista")
+            .join("associazione_artista_canzone", "artista.id", "associazione_artista_canzone.artista_id")
+            .join("canzone", "canzone.id", "associazione_artista_canzone.canzone_id")
+            .join("associazione_artista_album", "artista.id", "associazione_artista_album.artista_id")
+            .join("album", "album.id", "associazione_artista_album.album_id");
+        }
       }
-    } else if (req.body.from.length == 3) {
-      if (isEqual(req.body.from.slice().sort(), ["album", "artista", "canzone"])) {
-        query.from("artista")
-          .join("associazione_artista_canzone", "artista.id", "associazione_artista_canzone.artista_id")
-          .join("canzone", "canzone.id", "associazione_artista_canzone.canzone_id")
-          .join("associazione_artista_album", "artista.id", "associazione_artista_album.artista_id")
-          .join("album", "album.id", "associazione_artista_album.album_id");
-      }
+    } else {
+      query = knex.from(req.body.from);
     }
-  } else {
-    query = knex.from(req.body.from);
   }
 
   //SELECT
@@ -77,7 +79,7 @@ module.exports = (req, res, next) => {
   //ESECUZIONE
   query.then((rows) => {
     if (req.body.debug = "true") {
-      var querypulita = query.toString().replace(/\"/gi, "");
+      var querypulita = query.toString().toUpperCase().replace(/\"/gi, "");
       rows.unshift(querypulita);
     }
     res.send(rows)

@@ -4,7 +4,8 @@ const path = require("path"),
   express = require("express"),
   cors = require('cors'),
   helmet = require('helmet'),
-  logger = require("morgan")
+  logger = require("morgan"),
+  cookieParser = require('cookie-parser')
 
 const app = express();
 
@@ -19,8 +20,9 @@ if (process.env.NODE_ENV === "development") {
 //routing generico
 app.use(helmet());
 app.use(cors());
-app.use(express.json()); //middleware per gestione json
-app.use(express.urlencoded({ extended: false })); //non è possibile inserire parametri dentro altri parametri
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 
