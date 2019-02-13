@@ -1,30 +1,34 @@
 require("dotenv").config();
 
-const path = require("path"),
+const debug = require("debug")("whatsthehit:app"),
+  path = require("path"),
   express = require("express"),
-  cors = require('cors'),
-  helmet = require('helmet'),
+  cors = require("cors"),
+  bodyParser = require('body-parser'),
+  helmet = require("helmet"),
   logger = require("morgan"),
-  cookieParser = require('cookie-parser')
+  createError = require("http-errors"),
+  csrf = require('csurf'),
+  cookieParser = require("cookie-parser")
 
 const app = express();
+const csrfProtection = csrf({ cookie: true });
+
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(csrfProtection);
 
 //impostazioni viste
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
 }
-
-//routing generico
-app.use(helmet());
-app.use(cors());
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use(express.static(path.join(__dirname, "/public"))); //contenuto statico
 
 //routing pagine
 app.use("/", require("./src/routes/index.js"));
@@ -32,13 +36,14 @@ app.use("/", require("./src/routes/index.js"));
 //rest api
 app.use("/api", require("./src/routes/api.js"));
 
-//routing errore 404
+//Routing errore 404
 app.use((req, res, next) => {
-  next((404));
+  next(createError(404))
 });
 
+//Routing errore 500
 app.use((err, req, res, next) => {
-  console.log(err)
+  debug(err)
 
   res.header("Content-Type", "text/html");
 
@@ -53,7 +58,6 @@ app.use((err, req, res, next) => {
   // crea la pagina di errore
   res.status(err.status || 500);
   res.render("error");
-
 });
 
 module.exports = app;

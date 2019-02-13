@@ -3,6 +3,7 @@
 *.vscode
 *.snyk
 cert
+tmp
 
 # Logs
 logs

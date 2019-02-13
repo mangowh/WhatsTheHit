@@ -1,27 +1,15 @@
 #!/user/bin/env node
+"use strict";
 
 //Gestione variabili di sistema
 require("dotenv").config();
 
 //Dipendenze
-const app = require('../app'),
-  debug = require('debug')('whatsthehit:server'),
-  http = require('http'),
+const app = require("../app"),
+  debug = require("debug")("whatsthehit:server"),
+  http = require("http"),
   https = require("https"),
-  fs = require('fs')
-
-//Settaggio porta del server
-var port = normalizePort(process.env.PORT || '8080');
-
-//Creazione server
-var server = http.createServer(app);
-
-//Impostazione server
-server.on('error', onError);
-server.on('listening', onListening);
-
-//Avvio server
-server.listen(port);
+  fs = require("fs")
 
 //Funzione di normalizzazione del valore della porta
 function normalizePort(val) {
@@ -38,50 +26,22 @@ function normalizePort(val) {
   return false;
 }
 
-//Ascoltatori per il caso di errore
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
+if (process.env.HTTPS) {
+  var ssl_port = normalizePort(process.env.SSL_PORT || "8443");
+  var options = {
+    key: fs.readFileSync('cert/localhost.key', "utf8"),
+    cert: fs.readFileSync('cert/localhost.crt', "utf8")
   }
+  var ssl_server = https.createServer(options, app);
+  
+  ssl_server.listen(ssl_port);
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  debug("Ascoltando sulla porta " + ssl_port);
+} else {
+  var port = normalizePort(process.env.PORT || "8080");
+  var server = http.createServer(app);
 
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' richiede privilegi elevati');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' è occupata');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+  server.listen(port);
+
+  debug("Ascoltando sulla porta " + port);
 }
-
-//Ascoltatori per il caso di ascolto
-function onListening() {
-  console.log("Server HTTP in ascolto all'indirizzo http://localhost:" + port);
-}
-
-//HTTPS
-//var ssl_port = normalizePort(process.env.SSL_PORT || '8443');
-
-/*var options = {
-  key: fs.readFileSync('cert/private.key', "utf8"),
-  cert: fs.readFileSync('cert/mydomain.cert', "utf8")
-}*/
-
-//var ssl_server = https.createServer(options, app).listen(ssl_port);
-
-//ssl_server.on('error', onError);
-
-//ssl_server.on('listening', onListening);
-/*
-if (this.key) {
-  debug("Server HTTPS in ascolto all'indirizzo https://localhost:" + ssl_port);
-}
-*/
