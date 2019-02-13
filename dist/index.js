@@ -1,5 +1,5 @@
-window.onload = function () {
-  document.getElementById("img").addEventListener("click", function () {
+window.onload = () => {
+  function SELECT() {
     var params = {
       "from": ["artista", "canzone"],
       "select": ["nome as artista", "titolo as canzone", "anno", "punteggio"],
@@ -11,13 +11,13 @@ window.onload = function () {
       "limit": 30
     }
 
-    fetch('/api/select', {
+    fetch("/api/select", {
       method: "POST",
       body: JSON.stringify(params),
-      credentials: 'same-origin', // include i cookie nella richiesta
+      credentials: "same-origin", // include i cookie nella richiesta
       headers: {
-        'content-type': 'application/json',
-        'CSRF-Token': document.getElementsByName("csrf-token")[0].getAttribute("content").toString() // imposta il token nel meta tag come header
+        "content-type": "application/json",
+        "CSRF-Token": document.getElementsByName("csrf-token")[0].getAttribute("content").toString() // imposta il token nel meta tag come header
       },
     })
       .then((res) => {
@@ -36,7 +36,17 @@ window.onload = function () {
       }
       )
       .catch(function (err) {
-        console.log('Fetch Error ', err);
+        console.log("Fetch Error ", err);
       });
+  }
+
+  document.getElementById("txt").addEventListener("keypress", (e) => {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+      e.preventDefault();
+      SELECT()
+      document.getElementById("txt").value.replace(/\n/g, "");
+    }
   });
+  document.getElementById("btn").addEventListener("click", SELECT);
 };

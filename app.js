@@ -8,11 +8,17 @@ const debug = require("debug")("whatsthehit:app"),
   helmet = require("helmet"),
   logger = require("morgan"),
   createError = require("http-errors"),
+  cookieParser = require("cookie-parser"),
   csrf = require('csurf'),
-  cookieParser = require("cookie-parser")
+  rateLimit = require("express-rate-limit")
 
 const app = express();
 const csrfProtection = csrf({ cookie: true });
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 10 minuti
+  max: 100, // limite di 100 richieste ogni IP
+  message: "Troppe richieste, riprova più tardi"
+});
 
 app.use(helmet());
 app.use(cors());
@@ -35,7 +41,7 @@ app.use("/static", express.static(path.join(__dirname, "/dist")));
 app.use("/", require("./src/routes/index.js"))
 
 //rest api
-app.use("/api", require("./src/routes/api.js"));
+app.use("/api", limiter, require("./src/routes/api.js"));
 
 //Routing errore 404
 app.use((req, res, next) => {
