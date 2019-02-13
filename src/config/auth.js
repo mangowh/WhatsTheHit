@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   /*if (req.csrfToken() == req.body.auth) {
     next();
   } else {
-    res.render("nope")
+    res.send("csrf invalido")
   }*/
 
   next();

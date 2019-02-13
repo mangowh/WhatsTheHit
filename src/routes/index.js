@@ -5,9 +5,13 @@ const debug = require("debug")("whatsthehit:index"),
 
 router.get("/", (req, res, next) => {
   res.header("Content-Type", "text/html");
-  res.render(path.join(__dirname, "/../../dist", "index.pug"), {
-    "_csrf": req.csrfToken()
-  });
+  if (req.csrfToken) {
+    res.render(path.join(__dirname, "/../../dist", "index.pug"), {
+      "_csrf": req.csrfToken()
+    });
+  } else {
+    res.render(path.join(__dirname, "/../../dist", "index.pug"));
+  }
 });
 
 module.exports = router;

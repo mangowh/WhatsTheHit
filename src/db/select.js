@@ -78,7 +78,7 @@ module.exports = (req, res, next) => {
 
   //ESECUZIONE
   query.then((rows) => {
-    if (req.body.debug = "true") {
+    if (req.body.debug == "true") {
       var querypulita = query.toString().toUpperCase().replace(/\"/gi, "");
       rows.unshift(querypulita);
     }

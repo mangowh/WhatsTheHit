@@ -22,16 +22,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(csrfProtection);
 
-//impostazioni viste
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
-
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
 }
 
-//routing pagine
-app.use("/", require("./src/routes/index.js"));
+//impostazioni viste
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
+
+//routing statico
+app.use("/static", express.static(path.join(__dirname, "/dist")));
+app.use("/", require("./src/routes/index.js"))
 
 //rest api
 app.use("/api", require("./src/routes/api.js"));

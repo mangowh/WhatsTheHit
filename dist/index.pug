@@ -4,6 +4,9 @@ html(lang='it')
     meta(charset='utf-8')
     meta(name='csrf-token', content=_csrf)
     title My Vue.js App
+    script(src="/static/index.js")
   body
-    #app
-    img(src='https://images.pexels.com/photos/20787/pexels-photo.jpg?cs=srgb&dl=adorable-animal-cat-20787.jpg&fm=jpg', height='100px')
+    img#img(src='http://pensionati-cisl.vi.it/wp-content/uploads/2015/11/bottone-verde-cliccami.png', height='300px')
+    textarea#txt(placeholder="Inserisci il numero dell'anno da cercare") 1978
+    pre
+      code#app

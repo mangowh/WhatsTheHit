@@ -11,7 +11,7 @@ router.use((req, res, next) => {
 router.use(auth)
 
 //Query al database
-router.get("/select", require("../db/select"));
+router.post("/select", require("../db/select"));
 router.post("/create", require("../db/create"))
 router.post("/drop", require("../db/drop"));
 router.post("/insert", require("../db/insert"));
