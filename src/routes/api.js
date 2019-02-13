@@ -8,18 +8,19 @@ router.use((req, res, next) => {
   next();
 });
 
-router.use(auth)
-
 //Query al database
 router.post("/select", require("../db/select"));
-router.post("/create", require("../db/create"))
-router.post("/drop", require("../db/drop"));
-router.post("/insert", require("../db/insert"));
-router.post("/delete", require("../db/delete"));
 
 //Richieste a wikidata
 router.get("/lang", require("../wiki/lang"))
 router.get("/genre", require("../wiki/genre"))
 router.get("/img", require("../wiki/img"))
+
+//Route protette
+router.use(auth)
+router.post("/create", require("../db/create"))
+router.post("/drop", require("../db/drop"));
+router.post("/insert", require("../db/insert"));
+router.post("/delete", require("../db/delete"));
 
 module.exports = router;
