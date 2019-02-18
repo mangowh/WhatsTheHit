@@ -14,36 +14,80 @@ Lo scopo finale è quello di riuscire ad analizzare e studiare l'andamento della
 
 WhatsTheHit usa altri progetti open-source per funzionare:
 
-* [node.js] - tecnologia asincrona javascript per backend
-* [Express] - veloce framework backend per node.js
+* [node.js] - runtime javascript asincrona per backend
+* [Express] - framework backend veloce e minimale per node.js
+* [nodemon] - strumento di riavvio automatico del server
+* [knex] - compositore di query sql
+* [wikidata-sdk] - libreria per interrogare l'api di wikidata
 
 ### Installazione
 
-## Per lanciare client:
+WhatsTheHit richiede [Node.js](https://nodejs.org/) versione 11.x per funzionare.
 
-* ```cd ./app```
-* ```yarn``` o ```npm install```
-* ```yarn start``` o ```npm run start```
+#### Server
 
-Disponibile a ```http://localhost:1234```
+Clonare la repo e installare le dipendenze con un gestore pacchetti come [yarn] o [npm]
 
-### Per costruire una versione distribuibile:
+```bash
+cd ./WhatsTheHit
+yarn
+# oppure
+npm install
+```
 
-* ```yarn build``` o ```npm run build```
+Avviare il server con debug su terminale
 
-Sarà disponibile nella cartella ```./app/dist```
+```bash
+yarn watch
+# oppure
+npm run watch
+```
 
-## Per lanciare server:
+WhatsTheHit supporta anche [pm2], utilizzabile tramite i comandi
+```bash
+# Avvia un istanza di debug pm2
+yarn debug-start
 
-* ```yarn``` o ```npm install```
-* ```yarn start``` o ```npm run start```
+# Visualizza il log del debugger
+yarn debug-logs
+
+# Stoppa l'istanza di debug
+yarn debug-stop
+```
+
+Avviare il server in ambienti di produzione
+
+```bash
+yarn start
+# oppure
+npm run start
+```
+
+#### Client
+
+```bash
+cd static
+yarn
+yarn start
+```
+
+Creare una versione da sorgente del client
+
+```bash
+yarn build
+```
 
 Licenza
 ----
-
 MIT
 
 [//]: # (Link usati nel testo http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
    [node.js]: <http://nodejs.org>
    [express]: <http://expressjs.com>
+   [yarn]: <https://yarnpkg.com>
+   [npm]: <https://www.npmjs.com>
+   [pm2]: <http://pm2.keymetrics.io>
+   [nodemon]: <https://github.com/remy/nodemon>
+   [knex]: <https://knexjs.org/>
+   [wikidata-sdk]: <https://github.com/maxlath/wikidata-sdk>
