@@ -37,7 +37,7 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 //routing statico
-app.use("/static", express.static(path.join(__dirname, "/dist")));
+app.use("/static", express.static(path.join(__dirname, "/static")));
 app.use("/", require("./src/routes/index.js"))
 
 //rest api
