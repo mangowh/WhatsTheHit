@@ -28,6 +28,10 @@ module.exports = (req, res, next) => {
             .join("associazione_artista_album", "artista.id", "associazione_artista_album.artista_id")
             .join("album", "album.id", "associazione_artista_album.album_id");
         }
+      } else if (req.body.from.length == 1) {
+        query.from(req.body.from[0])
+      } else {
+        throw new Error("Errore nel from")
       }
     } else {
       query = knex.from(req.body.from);
@@ -36,7 +40,11 @@ module.exports = (req, res, next) => {
 
   //SELECT
   if (req.body.select) {
-    query.select(req.body.select);
+    if (req.body.select === "count") {
+      query.count()
+    } else {
+      query.select(req.body.select);
+    }
   } else {
     query.select();
   }
@@ -64,10 +72,14 @@ module.exports = (req, res, next) => {
 
   //ORDER BY
   if (req.body.orderby) {
-    if (req.body.desc) {
-      query.orderBy(req.body.orderby, "desc")
+    if (req.body.orderby === "rand") {
+      query.orderByRaw("random()")
     } else {
-      query.orderBy(req.body.orderby)
+      if (req.body.desc) {
+        query.orderBy(req.body.orderby, "desc")
+      } else {
+        query.orderBy(req.body.orderby)
+      }
     }
   }
 

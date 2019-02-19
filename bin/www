@@ -29,11 +29,11 @@ function normalizePort(val) {
 if (process.env.HTTPS) {
   var ssl_port = normalizePort(process.env.SSL_PORT || "8443");
   var options = {
-    key: fs.readFileSync('cert/localhost.key', "utf8"),
-    cert: fs.readFileSync('cert/localhost.crt', "utf8")
+    key: fs.readFileSync('ssl/key.key', "utf8"),
+    cert: fs.readFileSync('ssl/cert.crt', "utf8")
   }
   var ssl_server = https.createServer(options, app);
-  
+
   ssl_server.listen(ssl_port);
 
   debug("Ascoltando sulla porta " + ssl_port);
