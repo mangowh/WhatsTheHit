@@ -8,7 +8,7 @@ const debug = require("debug")("whatsthehit:api"),
 module.exports = (req, res, next) => {
   var nome = unescape(req.query.name)
 
-  var lang = "it"
+  var lang = req.query.lang || "it"
 
   var url = wdk.searchEntities({
     search: nome,
@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
       if (JSON.parse(response).search[0]) {
         id = JSON.parse(response).search[0].id
       } else {
-        throw new Error('error');
+        throw new Error("Artista mancante");
       }
       var options = {
         "ids": id,
@@ -40,10 +40,11 @@ module.exports = (req, res, next) => {
       var entities = wdk.simplify.entities(JSON.parse(response).entities)
       var entity = Object.keys(entities)[0].toString()
 
-      var id = entities[entity].claims.P136.toString().split(",");
-
-      if (id === "undefined") {
-        throw new Error();
+      var id
+      if (entities[entity].claims.P136) {
+        id = entities[entity].claims.P136.toString().split(",");
+      } else {
+        throw new Error("Informazione genere mancante");
       }
 
       var options = {
@@ -57,14 +58,14 @@ module.exports = (req, res, next) => {
     })
     .then(rp)
     .then((response) => {
-
       var entities = wdk.simplify.entities(JSON.parse(response).entities)
       var entity = Object.keys(entities)[0].toString()
 
       var result = entities[entity].labels[lang]
       res.send(result)
     })
-    .catch(error => {
-      res.render("error")
+    .catch(err => {
+      debug(err)
+      res.status(500).send(err.message || "Errore sconosciuto")
     })
 }

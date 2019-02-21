@@ -21,7 +21,7 @@ request({
   body: JSON.stringify({
     "from": ["artista"],
     "orderby": "rand",
-    "limit": 10
+    "limit": 3
   }),
   strictSSL: false
 }, (err, res, body) => {
@@ -38,7 +38,7 @@ request({
   asyncLoop(listaArtisti, (item, next) => {
     request({
       method: "GET",
-      uri: "https://localhost:8443/api/genre?name=" + item.nome.toString(),
+      uri: "https://localhost:8443/api/lang?name=" + item.nome.toString(),
       headers: {
         "Content-Type": "application/json"
       },
