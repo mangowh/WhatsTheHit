@@ -40,7 +40,7 @@
     "debug-logs": "DEBUG='*' pm2 logs --update-env"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4",
+    "nodemon": "^1.18.10",
     "pm2": "^3.2.4"
   }
 }
