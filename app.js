@@ -4,13 +4,14 @@ const debug = require("debug")("whatsthehit:app"),
   path = require("path"),
   express = require("express"),
   cors = require("cors"),
-  bodyParser = require('body-parser'),
+  bodyParser = require("body-parser"),
   helmet = require("helmet"),
   logger = require("morgan"),
   createError = require("http-errors"),
   cookieParser = require("cookie-parser"),
-  csrf = require('csurf'),
-  rateLimit = require("express-rate-limit")
+  csrf = require("csurf"),
+  rateLimit = require("express-rate-limit"),
+  expressVue = require("express-vue")
 
 const app = express();
 const csrfProtection = csrf({ cookie: true });
@@ -21,15 +22,16 @@ const limiter = rateLimit({
 });
 
 app.use(helmet());
+app.disable("x-powered-by");
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-if (process.env.CSRF==="ON") {
+if (process.env.CSRF === "ON") {
   app.use(csrfProtection);
-} 
+}
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
@@ -41,7 +43,29 @@ app.set("views", path.join(__dirname, "views"));
 
 //routing statico
 app.use("/static", express.static(path.join(__dirname, "/static")));
-app.use("/", require("./src/routes/index.js"))
+
+//Routing dell"indice
+//app.use("/", require("./src/routes/index.js"))
+
+const vueOptions = {
+  rootPath: __dirname,
+  head: {
+    styles: [{ style: "assets/rendered/style.css" }],
+  },
+};
+
+const expressVueMiddleware = expressVue.init(vueOptions);
+app.use(expressVueMiddleware);
+
+app.get("/", (req, res, next) => {
+  const data = {
+    title: "Oh hi world!",
+  };
+  req.vueOptions.head.title = "Express-Vue MVC Starter Kit";
+  res.renderVue("static/index.vue", data, req.vueOptions);
+})
+
+//##################################
 
 //rest api
 app.use("/api", limiter, require("./src/routes/api.js"));
