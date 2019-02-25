@@ -6,11 +6,11 @@ const debug = require("debug")("whatsthehit:index"),
 router.get("/", (req, res, next) => {
   res.header("Content-Type", "text/html");
   if (req.csrfToken) {
-    res.render(path.join(__dirname, "/../../static", "index.pug"), {
+    res.sendFile(path.join(__dirname, "/../../static/dist", "index.html"), {
       "_csrf": req.csrfToken()
     });
   } else {
-    res.render(path.join(__dirname, "/../../static", "index.pug"));
+    res.sendFile(path.join(__dirname, "/../../static/dist", "index.html"));
   }
 });
 

@@ -10,8 +10,7 @@ const debug = require("debug")("whatsthehit:app"),
   createError = require("http-errors"),
   cookieParser = require("cookie-parser"),
   csrf = require("csurf"),
-  rateLimit = require("express-rate-limit"),
-  expressVue = require("express-vue")
+  rateLimit = require("express-rate-limit")
 
 const app = express();
 const csrfProtection = csrf({ cookie: true });
@@ -42,30 +41,10 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 //routing statico
-app.use("/static", express.static(path.join(__dirname, "/static")));
+app.use("/", express.static(path.join(__dirname, "/static/dist")));
 
 //Routing dell"indice
-//app.use("/", require("./src/routes/index.js"))
-
-const vueOptions = {
-  rootPath: __dirname,
-  head: {
-    styles: [{ style: "assets/rendered/style.css" }],
-  },
-};
-
-const expressVueMiddleware = expressVue.init(vueOptions);
-app.use(expressVueMiddleware);
-
-app.get("/", (req, res, next) => {
-  const data = {
-    title: "Oh hi world!",
-  };
-  req.vueOptions.head.title = "Express-Vue MVC Starter Kit";
-  res.renderVue("static/index.vue", data, req.vueOptions);
-})
-
-//##################################
+app.use("/", require("./src/routes/index.js"))
 
 //rest api
 app.use("/api", limiter, require("./src/routes/api.js"));

@@ -1,5 +1,5 @@
 {
-  "watch": ["./bin","./src","./app.js","./static"],
+  "watch": ["./bin","./src","./app.js"],
   "ignore": [
     ".git",
     "node_modules/**/node_modules"
