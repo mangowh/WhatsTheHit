@@ -4,6 +4,7 @@
 *.snyk
 cert
 tmp
+.DS_Store
 
 # Logs
 logs

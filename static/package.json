@@ -1,29 +1,10 @@
 {
-  "name": "client",
-  "version": "0.1",
-  "description": "Pack Vue",
+  "name": "test",
+  "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/manghettodev/WhatsTheHit/tree/master/client",
-  "author": "Martino Tagliente",
   "license": "MIT",
   "dependencies": {
-    "vue": "^2.5.16",
-    "vue-hot-reload-api": "^2.3.0"
-  },
-
-  "devDependencies": {
-    "@vue/component-compiler-utils": "^2.1.0",
-    "babel-preset-env": "^1.7.0",
-    "parcel-bundler": "^1.9.4",
-    "vue-template-compiler": "^2.5.16"
-  },
-
-  "scripts": {
-    "clean": "rm -rf .cache && rm -rf dist",
-    "prestart": "yarn clean",
-    "start": "parcel index.html",
-    "prebuild": "yarn clean",
-    "build": "parcel build index.html"
+    "@vue/cli": "^3.4.1",
+    "@vue/cli-service-global": "^3.4.1"
   }
-
 }
