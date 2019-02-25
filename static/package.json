@@ -5,7 +5,9 @@
   "license": "MIT",
   "dependencies": {
     "@vue/cli": "^3.4.1",
-    "@vue/cli-service-global": "^3.4.1"
+    "@vue/cli-service-global": "^3.4.1",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
   },
   "scripts": {
     "serve": "PORT=3000 vue serve",
