@@ -26,7 +26,10 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(csrfProtection);
+
+if (process.env.CSRF==="ON") {
+  app.use(csrfProtection);
+} 
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));

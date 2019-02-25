@@ -1,5 +1,5 @@
 {
-  "watch": ["./bin","./src","./app.js"],
+  "watch": ["./bin","./src","./app.js","./static"],
   "verbose": true,
   "env": {
     "NODE_ENV": "development",

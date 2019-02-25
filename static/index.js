@@ -16,8 +16,8 @@ window.onload = () => {
       body: JSON.stringify(params),
       credentials: "same-origin", // include i cookie nella richiesta
       headers: {
-        "content-type": "application/json",
-        "CSRF-Token": document.getElementsByName("csrf-token")[0].getAttribute("content").toString() // imposta il token nel meta tag come header
+        "content-type": "application/json"
+        //"CSRF-Token": document.getElementsByName("csrf-token")[0].getAttribute("content").toString() // imposta il token nel meta tag come header
       },
     })
       .then((res) => {
