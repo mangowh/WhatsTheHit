@@ -1,11 +1,11 @@
 *.vs
 *.env
 *.vscode
-*.snyk
-cert
 tmp
 .DS_Store
 .cache
+ssl
+static/dist
 
 # Logs
 logs
