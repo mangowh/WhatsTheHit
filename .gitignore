@@ -5,6 +5,7 @@
 cert
 tmp
 .DS_Store
+.cache
 
 # Logs
 logs
