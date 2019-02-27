@@ -1,6 +1,6 @@
 {
-  "name": "server",
-  "version": "0.0.5",
+  "name": "whatsthehit-server",
+  "version": "0.1.1",
   "description": "Server node progetto WhatsTheHit",
   "main": "app.js",
   "repository": "https://github.com/manghettodev/WhatsTheHit",
@@ -10,8 +10,6 @@
     "node": "11.x"
   },
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "country-language": "^0.1.7",
