@@ -1,5 +1,5 @@
 <template>
-  <h1>CIAONE!</h1>
+  <h1>Hello WORLD!</h1>
 </template>
 
 <style lang="sass" href>

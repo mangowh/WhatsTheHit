@@ -16,7 +16,7 @@ const app = express();
 const csrfProtection = csrf({ cookie: true });
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 10 minuti
-  max: 1000, // limite di 100 richieste
+  max: 1000, // limite di 1000 richieste
   message: "Troppe richieste, riprova più tardi"
 });
 
