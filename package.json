@@ -39,11 +39,10 @@
     "debug-stop": "pm2 stop ./bin/www",
     "debug-logs": "DEBUG='*' pm2 logs --update-env",
     "predocs": "rm -rf ./docs/*",
-    "docs": "jsdoc -c .jsdoc.json --verbose"
+    "docs": "apidoc -i ./src/ -o ./docs/"
   },
   "devDependencies": {
-    "jsdoc": "^3.5.5",
-    "minami": "^1.2.3",
+    "apidoc": "^0.17.7",
     "nodemon": "^1.18.10",
     "pm2": "^3.2.4"
   }
