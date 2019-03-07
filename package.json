@@ -38,7 +38,8 @@
     "debug-start": "pm2 start ./bin/www",
     "debug-stop": "pm2 stop ./bin/www",
     "debug-logs": "DEBUG='*' pm2 logs --update-env",
-    "generate-docs": "jsdoc --configure .jsdoc.json --verbose"
+    "predocs": "rm -rf ./docs/*",
+    "docs": "jsdoc -c .jsdoc.json --verbose"
   },
   "devDependencies": {
     "jsdoc": "^3.5.5",
