@@ -38,11 +38,8 @@
     "debug-start": "pm2 start ./bin/www",
     "debug-stop": "pm2 stop ./bin/www",
     "debug-logs": "DEBUG='*' pm2 logs --update-env",
-    "predocs": "rm -rf ./docs/*",
-    "docs": "apidoc -i ./src/ -o ./docs/"
   },
   "devDependencies": {
-    "apidoc": "^0.17.7",
     "nodemon": "^1.18.10",
     "pm2": "^3.2.4"
   }
