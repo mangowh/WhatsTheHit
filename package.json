@@ -37,7 +37,7 @@
     "watch": "nodemon ./bin/www",
     "debug-start": "pm2 start ./bin/www",
     "debug-stop": "pm2 stop ./bin/www",
-    "debug-logs": "DEBUG='*' pm2 logs --update-env",
+    "debug-logs": "DEBUG='*' pm2 logs --update-env"
   },
   "devDependencies": {
     "nodemon": "^1.18.10",
