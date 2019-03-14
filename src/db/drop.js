@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
 
   knex.schema.dropTable(req.body.nome)
     .then(() => {
-      res.render("OK");
+      res.render("ok");
     })
     .catch((err) => {
       debug(err)

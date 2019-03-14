@@ -3,7 +3,7 @@ var options = {
   pool: { min: 0, max: 5 }
 }
 
-if (process.env.ONLINE === "ON") {
+if (process.env.ONLINE) {
   options.connection = process.env.ELE_URL;
   options.ssl = true
 } else {
