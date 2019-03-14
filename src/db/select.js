@@ -85,7 +85,16 @@ module.exports = (req, res, next) => {
 
   //LIMIT
   if (req.body.limit) {
-    query.limit(req.body.limit)
+    if (Array.isArray(req.body.limit)) {
+      if (req.body.limit.length == 2) {
+        query.offset(req.body.limit[0]);
+        query.limit(req.body.limit[1])
+      } else {
+        throw new Error ("Errore nel limit")
+      }
+    } else {
+      query.limit(req.body.limit)
+    }
   }
 
   //ESECUZIONE
