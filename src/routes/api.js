@@ -19,7 +19,6 @@ router.get("/img", require("../wiki/img"))
 
 //Route protette
 router.use(auth)
-router.post("/drop", require("../db/drop"));
 router.post("/insert", require("../db/insert"));
 router.post("/delete", require("../db/delete"));
 
