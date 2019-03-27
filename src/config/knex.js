@@ -1,9 +1,11 @@
+require("dotenv").config();
+
 var options = {
   client: 'pg',
   pool: { min: 0, max: 5 }
 }
 
-if (process.env.ONLINE) {
+if (process.env.ONLINE === "ON") {
   options.connection = process.env.ELE_URL;
   options.ssl = true
 } else {

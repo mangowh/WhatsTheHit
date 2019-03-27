@@ -36,6 +36,8 @@ module.exports = (req, res, next) => {
     } else {
       query = knex.from(req.body.from);
     }
+  } else {
+    throw new Error("From mancante")
   }
 
   //SELECT
@@ -90,7 +92,7 @@ module.exports = (req, res, next) => {
         query.offset(req.body.limit[0]);
         query.limit(req.body.limit[1])
       } else {
-        throw new Error ("Errore nel limit")
+        throw new Error("Errore nel limit")
       }
     } else {
       query.limit(req.body.limit)
