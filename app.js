@@ -1,5 +1,7 @@
+//Caricamento variabili d'ambiente
 require("dotenv").config();
 
+//Importazione delle liberie npm
 const debug = require("debug")("whatsthehit:app"),
   path = require("path"),
   express = require("express"),
@@ -20,6 +22,7 @@ const limiter = rateLimit({
   message: "Troppe richieste, riprova più tardi"
 });
 
+//Attivazione dei middleware
 app.use(helmet());
 app.disable("x-powered-by");
 app.use(cors());
@@ -28,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//Controllo delle variabili di ambiente
 if (process.env.CSRF === "ON") {
   app.use(csrfProtection);
 }
@@ -36,17 +40,17 @@ if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
 }
 
-//impostazioni viste
+//Impostazione delle view
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
-//routing statico
+//Routing del sito statico
 app.use("/", express.static(path.join(__dirname, "/static/dist")));
 
-//Routing dell"indice
+//Routing dell'indice
 app.use("/", require("./src/routes/index.js"))
 
-//rest api
+//Routing dell'api
 app.use("/api", limiter, require("./src/routes/api.js"));
 
 //Routing errore 404
