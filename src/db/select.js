@@ -77,10 +77,20 @@ module.exports = (req, res, next) => {
     if (req.body.orderby === "rand") {
       query.orderByRaw("random()")
     } else {
-      if (req.body.desc) {
-        query.orderBy(req.body.orderby, "desc")
+      if (Array.isArray(req.body.orderby)) {
+        for (var i = 0; i < req.body.orderby.length; i++) {
+          if (req.body.desc === true) {
+            query.orderBy(req.body.orderby[i], "desc")
+          } else {
+            query.orderBy(req.body.orderby[i])
+          }
+        }
       } else {
-        query.orderBy(req.body.orderby)
+        if (req.body.desc === true) {
+          query.orderBy(req.body.orderby, "desc")
+        } else {
+          query.orderBy(req.body.orderby)
+        }
       }
     }
   }
