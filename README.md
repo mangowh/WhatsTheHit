@@ -63,6 +63,8 @@ yarn start
 npm run start
 ```
 
+Per una guida su come interrogare l'API consultare la [wiki] di questa repository.
+
 #### Client
 
 ```bash
@@ -91,3 +93,4 @@ MIT
    [nodemon]: <https://github.com/remy/nodemon>
    [knex]: <https://knexjs.org/>
    [wikidata-sdk]: <https://github.com/maxlath/wikidata-sdk>
+   [wiki]: https://github.com/tambdev/WhatsTheHit/wiki
