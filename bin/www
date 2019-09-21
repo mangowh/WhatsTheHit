@@ -43,5 +43,5 @@ if (process.env.HTTPS) {
 
   server.listen(port);
 
-  debug("Ascoltando sulla porta " + port);
+  console.log("Ascoltando sulla porta " + port);
 }

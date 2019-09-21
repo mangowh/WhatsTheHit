@@ -45,7 +45,7 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 //Routing del sito statico
-app.use("/", express.static(path.join(__dirname, "/static/dist")));
+app.use("/", express.static(path.join(__dirname, "/client/dist")));
 
 //Routing dell'indice
 app.use("/", require("./src/routes/index.js"))
